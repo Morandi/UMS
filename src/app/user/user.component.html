@@ -1,0 +1,33 @@
+<!-- Togliamo CF e Age perche' andremo a mostrarli con il pulsante dettaglio -->
+<td>{{user.name}}</td>
+<td>{{user.lastname}}</td>
+<!-- <td>{{user.fiscalcode}}</td> -->
+<td>{{user.email}}</td>
+<td>{{user.phone}}</td>
+<td>{{user.province}}</td>
+<!-- <td>{{user.age}}</td> -->
+<td class="buttons">
+    <!-- Evento nativo -->
+    <!-- <button class="delete" onclick="alert('Ci sono')">DELETE</button> -->
+    <!-- Evento di Angular -->
+    <!-- In generale basta togliere on dal nome dell'evento nativo e racchiuderlo tra () -->
+    <div class="row">
+        <div class="col-sm-4">
+            <button class="btn btn-primary btn-sm" (click)="showUserDetail()">
+                <!-- sm, md, lg, 2x, 4x -->
+                <fa-icon [icon]="fas.faInfo" fixed="true"></fa-icon>
+            </button>
+        </div>
+        <div class="col-sm-4">
+            <button class="btn btn-primary btn-sm" (click)="updateUser()">
+                <!-- sm, md, lg, 2x, 4x -->
+                <fa-icon [icon]="fas.faPencilAlt" fixed="true"></fa-icon>
+            </button>
+        </div>
+        <div class="col-sm-4">
+            <button class="btn btn-danger btn-sm" (click)="deleteUser()">
+                <fa-icon [icon]="fas.faTrash" fixed="true"></fa-icon>
+            </button>
+        </div>
+    </div>
+</td>

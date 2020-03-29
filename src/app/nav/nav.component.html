@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Navbar</a>
+
+    <!-- Bootstrap dipende da JQuery per tutta la parte di JS e per questo motivo se ad esempio si prova 
+    a cliccare il bottone per espandere il Menu senza aver installato JQuery non succede nulla.
+    Non e' opportuno installare lo script di JQuery con Angular per evitare che componenti esterni
+    modifichino il dom. Per questo motivo si puo' installare il package ngbootstrap:
+    npm install --save @ng-bootstrap/ng-bootstrap-->
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" (click)="toggleMenu()" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" (click)="isCollapsed=!isCollapsed" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> -->
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <!-- La direttiva ngClass aggiunge una classe a seconda di un parametro che viene passato-->
+    <!-- Quando si passa una classe deve essere inserita tra singoli apici altrimenti 
+        il valore passato viene interpretato come variabile.
+        La classe di bootstrap che consente di visualizzare il menu e' la classe SHOW
+        mentre quella che consente di nasconderlo e' la classe HIDE-->
+    <!-- Per fare in modo che il menu venga nascosto/visualizzato ad ogni click 
+        sul toggle basta impostare una variabile es: showMenu-->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="showMenu ? 'show' : 'hide'">
+        <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isCollapsed"> -->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <!-- Con routerLink definiamo l'url della rotta -->
+          <a class="nav-link" href="#" routerLink="">Home</a>
+        </li>
+        <li class="nav-item active">
+            <!-- Con routerLink definiamo l'url della rotta -->
+          <a class="nav-link" href="#" *ngIf="isUserLoggedIn" routerLink="users">Users</a>
+        </li>
+        <li class="nav-item">
+          <!-- <a class="nav-link" href="#" (click)="newUser()">New User</a> -->
+
+          <!-- Versione con le rotte -->
+          <a class="nav-link" href="#" *ngIf="isUserLoggedIn" routerLink="/users/new">New User</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a *ngIf="!isUserLoggedIn" class="nav-link" (click)="signIn($event)" href="#">Login</a>
+        </li>
+        <li class="nav-item text-nowrap">
+          <a *ngIf="!isUserLoggedIn" class="nav-link" (click)="signUp($event)" href="#">Sign up</a>
+        </li>
+        <li *ngIf="isUserLoggedIn" class="nav-item nav-link">
+          {{username}}
+        </li>
+        <li class="nav-item text-nowrap">
+          <!-- Lasciamo href per far si' che venga visualizzata la manina quando ci si passa sopra col mouse.
+            Dobbiamo pero' ricordarci di evitare che venga eseguita l'operazione di default di redirect sulla homepage.
+            Questo possiamo farlo intercettando l'evento $event-->
+          <a *ngIf="isUserLoggedIn" class="nav-link" (click)="logout($event)" href="#">Sign out</a>
+        </li>
+      </ul>
+    </div>
+  </nav>

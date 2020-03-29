@@ -1,0 +1,97 @@
+<!-- Le variabili di TEMPLATE si indicano con il #. 
+    Con questa variabile possiamo passare il form al component.ts -->
+<form class="userForm" #f="ngForm">
+    <!-- {{f.form.value | json}} -->
+    <input type="hidden" name="id" [(ngModel)]="user.id">
+    <div class="form-row">
+        <div class="form-group col-sm-6">
+            <label for="firstname">First Name</label>
+            <!-- Per fare il binding tra il campo in grafica e il valore
+                dell'oggetto passato si usa la direttiva ngModel.
+                La doppia parentesi [()] indica che l'oggetto viene 
+                utilizzato si in input che in output -->
+    
+            <!-- required e' un campo nativo di html5 -->
+            <input required pattern="[a-zA-Z\s]*" minlength="3" #firstName="ngModel" placeholder="first name" [(ngModel)]="user.name" class="form-control" name="firstname" id="firstname">
+            <!-- Tramite la direttiva *ngIf definiamo che il div debba essere visibile solamente se il campo first name non e' valido.
+                Per avere un riferimento al model del campo first name identificichiamo un placeholder del campo con la sintassi
+                #nomeCampo="ngModel" come abbiamo fatto qualche riga sopra per il form.
+                In questo caso user.name-->
+
+            <!-- Invalid ci dice solamente se il campo non e' valido, ma non ci specifica per quale motivo.
+                Infatti e' possibile definire piu' di un validatore per ogni campo-->
+            <!-- E' possibile accedere anche all'elenco degli errori -->
+            <!-- Il div esterno e' necessario perche' gli errori esistono solamente se il campo non e' valido.
+                Se si tenta di accedere ad un errore quando il campo e' compilato correttamente
+                si avranno degli errori sulla console del browser-->
+            <!-- Per evitare che al caricamento del form compaia per una frazione di secondo l'errore possiamo servirci di altre due proprieta'
+                dirty: indica che l'utente ha digitato qualcosa nel campo
+                touched: indica che l'utente ha cliccato nel campo -->
+            <!-- QUI SI PUO' TROVARE L'ELENCO DI TUTTE LE FORME DI VALIDAZIONE DEI CAMPI: https://angular.io/guide/form-validation-->
+            <div *ngIf="firstName.dirty && firstName.touched && firstName.invalid">
+                <div class="alert-danger" *ngIf="firstName.errors.required">
+                    The field name is required
+                </div>
+                <div class="alert-danger" *ngIf="firstName.errors.minlength">
+                    The min length of field first name is {{firstName.errors.minlength.requiredLength}} chars
+                </div>
+                <div class="alert-danger" *ngIf="firstName.errors.pattern">
+                    The min length of field first name is {{firstName.errors.pattern.requiredPattern}}
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-sm-6">
+            <label for="lastname">Last Name</label>
+            <input [(ngModel)]="user.lastname" class="form-control" name="lastname" id="lastname">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-sm-6">
+            <label for="fiscalcode">Fiscal code</label>
+            <input [(ngModel)]="user.fiscalcode" class="form-control" name="fiscalcode" id="fiscalcode">
+        </div>
+        <div class="form-group col-sm-6">
+            <label for="phone">Phone</label>
+            <input [(ngModel)]="user.phone" class="form-control" name="phone" id="phone">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-sm-6">
+            <label for="email">Email</label>
+            <input [(ngModel)]="user.email" class="form-control" type="email" name="email" id="email">
+        </div>
+        <div class="form-group col-sm-6">
+            <label for="age">Age</label>
+            <input required minlength="2" pattern="[0-9]{2,3}" #age="ngModel" [(ngModel)]="user.age" class="form-control" type="number" name="age" id="age">
+            <div *ngIf="age.dirty && age.touched && age.invalid">
+                <div class="alert-danger" *ngIf="age.errors.required">
+                    The field age is required
+                </div>
+                <div class="alert-danger" *ngIf="age.errors.minlength">
+                    The min length of field age is {{age.errors.minlength.requiredLength}} digits
+                </div>
+                <div class="alert-danger" *ngIf="age.errors.pattern">
+                    The min length of field age is {{age.errors.pattern.requiredPattern}}
+                </div>
+            </div>
+        </div>    
+    </div>
+    
+    <div class="form-row">
+        <!-- Offset consente di spostare di n/12 un componente da sinistra -->
+        <div class="form-group col-sm-6 offset-3">
+            <label for="province">Province</label>
+            <input [(ngModel)]="user.province" class="form-control" name="province" id="province">
+        </div>
+    </div>
+    <div class="form-group form-footer text-center">
+        <button class="btn btn-primary" (click)="backToUsers()" >BACK</button>
+        <button class="btn btn-secondary" (click)="resetForm(f.form)">RESET</button>
+        <!-- La proprieta nativa 'disabled' di button ci consente di disabilitare il bottone a determinate condizioni-->
+        <!-- In questo caso diciamo che rimane disabilitato finche' il form non e' valido e cioe' fino a quando-->
+        <!-- i campi obbligatori non sono tutti compilati correttamente -->
+        <button [disabled]="f.invalid" class="btn btn-success" (click)="saveUser()">SAVE</button>
+    </div>
+</form>

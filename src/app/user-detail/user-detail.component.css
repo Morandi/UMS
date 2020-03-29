@@ -1,0 +1,5 @@
+/* La classe ng-invalid viene aggiunta automaticamente ai componenti che sono invalid.
+La overrido impostando un bordo rosso sul campo per far risaltare i punti in cui ci sono errori*/
+input.ng-invalid{
+    border: 1px solid red;
+}

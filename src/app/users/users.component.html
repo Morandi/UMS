@@ -1,0 +1,32 @@
+<table class="table table-striped table-md table-dark">
+    <caption>{{title}}</caption>
+    <tr>
+        <!-- Togliamo CF e Age perche' andremo a mostrarli con il pulsante dettaglio -->
+        <th>Nome</th>
+        <th>Cognome</th>
+        <!-- <th>Codice Fiscale</th> -->
+        <th>Email</th>
+        <th>Telefono</th>
+        <th>Provincia</th>
+        <!-- <th>Age</th> -->
+        <th>Actions</th>
+    </tr>
+    <!-- La PIPE serve per mostrare i dati salvati in oggetti -->
+    <!-- In questo caso li trasforma in json -->
+    <!-- {{users | json}} -->
+    <!-- Si usa una direttiva di Angular per ciclare -->
+    <!-- Tutte le direttive iniziano con * -->
+    <!-- Indichiamo che la riga avrà l'attributo app-user (component USER)
+        e che passiamo ad ogni riga un oggetto user 
+        nella variabile con alias esterno user-data-->
+    <!-- La variabile di tipo INPUT si indica indicando tra [] il nome 
+        della variabile @Input dichiarata nel componente a cui viene passata-->
+    <!-- La variabile di tipo OUTPUT che viene passata dal componente figlio si chiama $event
+        tra le virgolette si inserisce il nome del metodo del componente padre-->
+    <tr app-user *ngFor="let user of users" [user-data]="user" (onDeleteUser)="onDeleteUser($event)" (onSelectUser)="onSelectUser($event)">
+
+
+        <!-- E' possibile passare una variabile ad un componente figlio indicando il nome tra [] e impostandone il valore tra "" -->
+        <!-- <app-user [user-data] = "user"></app-user> -->
+    </tr>
+</table>
